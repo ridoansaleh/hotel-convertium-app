@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "../css/form.css";
@@ -10,6 +10,12 @@ function Login() {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data?.session) navigate("/");
+    });
+  }, []);
 
   const validate = () => {
     const newErrors = {};
