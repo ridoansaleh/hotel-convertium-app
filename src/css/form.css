@@ -1,0 +1,60 @@
+.field {
+  /* width: 300px; */
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid lightgrey;
+  box-sizing: border-box;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mt-5 {
+  margin-top: 5px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+}
+
+.signup-form, .login-form {
+  width: 300px;
+  margin: auto;
+}
+
+.login-form > .label {
+  text-align: center;
+}
+
+.login-form > .signup-cta {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.signup-form > .label {
+  text-align: center;
+}
+
+.signup-form > .login-cta {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+
+.signup-btn {
+  padding: 8px 10px;
+  width: 100%;
+  cursor: pointer;
+}
