@@ -1,0 +1,60 @@
+.hero-image {
+  height: 180px;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media only screen and (min-width: 600px) {
+  .hero-image {
+    height: 400px;
+  }
+}
+
+.landing .title {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.search-bar {
+  display: flex;
+  height: 40px;
+  width: 100%;
+  background-color: lightgrey;
+  margin-bottom: 20px;
+}
+
+.search-bar > .input {
+  width: 49.8%;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+  padding: 5px 10px;
+  box-sizing: border-box;
+}
+
+.search-bar > .input > .total-guest {
+  display: flex;
+}
+
+.divider {
+  width: 0.4%;
+  height: 100%;
+  background-color: white;
+}
+
+.search-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.search-btn {
+  height: 40px;
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 0 20px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
