@@ -4,6 +4,10 @@
   padding: 2rem;
 }
 
+.page {
+  max-width: 800px;
+}
+
 .m-auto {
   margin: auto;
 }

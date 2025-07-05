@@ -1,0 +1,16 @@
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar .logout, .login {
+  background-color: white;
+  padding: 5px 10px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.mr-10 {
+  margin-right: 10px;
+}
