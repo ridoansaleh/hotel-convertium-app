@@ -60,7 +60,7 @@ function Landing() {
         <div className="divider" />
         <Flatpickr
           className="input date-picker"
-          options={{ mode: "range", dateFormat: "D, d M Y" }}
+          options={{ mode: "range", dateFormat: "d M Y" }}
           placeholder="Select a date"
           value={dateRange}
           onChange={setDateRange}

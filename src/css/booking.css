@@ -1,0 +1,7 @@
+.filter-bar .top {
+  width: 100%;
+}
+
+.filter-bar .sorting > select {
+  border: none;
+}
