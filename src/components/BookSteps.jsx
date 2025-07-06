@@ -21,7 +21,7 @@ function BookSteps({ step }) {
         <div className="circle mr-10">3</div>
         <label>Contact Information</label>
       </div>
-      <div className={`d-flex items-center ${3 > step ? "not-active" : ""}`}>
+      <div className={`d-flex items-center ${4 > step ? "not-active" : ""}`}>
         <div className="circle mr-10">4</div>
         <label>Confirmation</label>
       </div>

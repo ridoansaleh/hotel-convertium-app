@@ -5,3 +5,86 @@
 .filter-bar .sorting > select {
   border: none;
 }
+
+.contact-information {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-information .details {
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+  .contact-information .details {
+    flex-direction: row;
+    align-items: start;
+  }
+}
+
+.contact-information .details > div > .contact {
+  background-color: #e1e1e1;
+  border: 1px solid #b6b6b6;
+  margin-bottom: 16px;
+}
+
+.contact-information > .details select,
+.contact-information > .details input {
+  background-color: #e1e1e1;
+  border: none;
+  border-bottom: 1px solid #b6b6b6;
+  padding: 5px;
+}
+
+/* START: Proceed btn in Desktop */
+.contact-information .details .proceed-btn {
+  display: none;
+}
+@media only screen and (min-width: 600px) {
+  .contact-information .details .proceed-btn {
+    display: block;
+  }
+}
+/* END: Proceed btn in Desktop */
+
+.contact-information > .details input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+@media only screen and (min-width: 600px) {
+  .contact-information .details > div {
+    width: 65%;
+  }
+  .contact-information .details > div > .contact {
+    margin-right: 10px;
+    margin-bottom: 0;
+  }
+  .contact-information .details > .order {
+    width: 35%;
+  }
+}
+
+.contact-information .details > .order {
+  background-color: lightgrey;
+}
+
+.contact-information .details > .order .selected-room {
+  width: 100%;
+}
+
+/* START: Proceed btn in Mobile | Only display property */
+.contact-information .proceed-btn {
+  background-color: black;
+  color: white;
+  border: none;
+  width: 120px;
+  cursor: pointer;
+}
+@media only screen and (min-width: 600px) {
+  .contact-information .proceed-btn {
+    display: none;
+  }
+}
+/* END: Proceed btn in Mobile */

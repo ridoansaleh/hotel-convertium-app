@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Navigate } from "react-router-dom";
 import { format, parseISO, differenceInDays } from "date-fns";
 import { supabase } from "../supabaseClient";
+import useUser from "../useUser";
 import NavBar from "../components/NavBar";
 import BookSteps from "../components/BookSteps";
 import Room from "../components/Room";
+import { HOTEL_TAX_RATE, HOTEL_SERVICE_FEE } from "../constants";
 import "../css/booking.css";
+
+const sortOptions = [
+  { value: "lowest", label: "Lowest price" },
+  { value: "highest", label: "Highest price" },
+];
+const honorOptions = ["Mr", "Mrs", "Ms", "Miss", "Sir", "Madam"];
+const taxAndServiceFees = (HOTEL_TAX_RATE + HOTEL_SERVICE_FEE) * 10;
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -15,26 +24,44 @@ function formatDate(date) {
   return format(parseISO(date), "MMM d, yyyy");
 }
 
-const sortOptions = [
-  { value: "lowest", label: "Lowest price" },
-  { value: "highest", label: "Highest price" },
-];
+function calculateTaxAndServiceFee(total, fees) {
+  const result = (fees / 100) * total;
+  return +result.toFixed(2);
+}
+
+function calculateTotalPayment(total, fees) {
+  const result = total + calculateTaxAndServiceFee(total, fees);
+  return result.toFixed(2);
+}
 
 function Booking() {
-  const [step] = useState(2);
+  const [step, setStep] = useState(2);
+  const [selectedPrice, setSelectedPrice] = useState("");
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [honor, setHonor] = useState(honorOptions[0]);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [rooms, setRooms] = useState([]);
   const query = useQuery();
+  const { user } = useUser();
 
   const totalGuest = query.get("guest");
   const start = query.get("start");
   const end = query.get("end");
-  const totalStay = differenceInDays(parseISO(end), parseISO(start));
+
+  const totalStay =
+    end && start ? differenceInDays(parseISO(end), parseISO(start)) : 0;
 
   const getRooms = async () => {
     const response = await supabase.from("hotel-rooms").select("*");
     return response;
   };
+
+  useEffect(() => {
+    if (!user) return;
+    setName(user.name);
+    setEmail(user.email);
+  }, [user]);
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -51,7 +78,7 @@ function Booking() {
 
   const handleSelect = (e) => {
     const value = e.target.value;
-    setSelectedRoom(value);
+    setSelectedPrice(value);
     let newList = [];
     if (value === "lowest") {
       newList = [...rooms].sort((a, b) => a.price - b.price);
@@ -60,6 +87,40 @@ function Booking() {
     }
     setRooms(newList);
   };
+
+  const handleSelectRoom = (roomId) => {
+    // console.log("ROOM ID ", roomId);
+    const selectedRoom = rooms.find((room) => room.id === roomId);
+    // console.log("selectedRoom > ", selectedRoom);
+    if (!selectedRoom) return;
+    setSelectedRoom(selectedRoom);
+    setStep(3);
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Email is invalid";
+    }
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleBookingProceed = () => {
+    if (validate()) {
+      //
+    } else {
+      alert("Please input a valid name/email!");
+    }
+  };
+
+  if (!totalGuest || !start || !end) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="page m-auto">
@@ -82,7 +143,7 @@ function Booking() {
                 <label className="mr-10">Sort by:</label>
                 <select
                   className="text-uppercase"
-                  value={selectedRoom}
+                  value={selectedPrice}
                   onChange={handleSelect}
                 >
                   {sortOptions.map((opt) => (
@@ -96,10 +157,102 @@ function Booking() {
           </div>
           <div className="mt-24">
             {rooms.map((room) => (
-              <Room key={room.id} {...room} />
+              <Room key={room.id} {...room} onRoomSelected={handleSelectRoom} />
             ))}
           </div>
         </>
+      ) : null}
+      {step === 3 ? (
+        <div className="contact-information mt-24">
+          <div className="details mb-16">
+            <div>
+              <div className="contact p-16">
+                <div className="contact-title text-uppercase font-bold mb-16">
+                  Contact Information
+                </div>
+                <div className="d-flex items-center mb-16">
+                  <label className="w-30">Title</label>
+                  <select
+                    value={honor}
+                    onChange={(e) => setHonor(e.target.value)}
+                  >
+                    {honorOptions.map((honor) => (
+                      <option key={honor} value={honor}>
+                        {honor}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="d-flex items-center mb-16">
+                  <label className="w-30">Name</label>
+                  <input
+                    value={name}
+                    className="w-70"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div className="d-flex items-center">
+                  <label className="w-30">Email Address</label>
+                  <input
+                    value={email}
+                    className="w-70"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button
+                className="proceed-btn p-10 mt-24 text-uppercase"
+                onClick={handleBookingProceed}
+              >
+                Proceed
+              </button>
+            </div>
+            <div className="order p-16">
+              <div className="text-uppercase fs-13 mb-5">
+                {formatDate(start)} to {formatDate(end)}
+              </div>
+              <div className="text-uppercase fs-13">{totalStay} night</div>
+              <div className="text-uppercase font-bold mt-10">
+                Room: {totalGuest} guest
+              </div>
+              <img
+                src={selectedRoom.photo}
+                className="selected-room mt-5"
+                alt="Room Image"
+              />
+              <div className="text-uppercase font-bold fs-13 my-10">
+                {selectedRoom.title}
+              </div>
+              <div className="d-flex justify-between mb-10">
+                <span>Room</span>
+                <span>S${selectedRoom.price}</span>
+              </div>
+              <div className="d-flex justify-between mb-24">
+                <span>Tax & Service Charges ({taxAndServiceFees}%)</span>
+                <span>
+                  S$
+                  {calculateTaxAndServiceFee(
+                    selectedRoom.price,
+                    taxAndServiceFees
+                  )}
+                </span>
+              </div>
+              <div className="d-flex justify-between">
+                <span className="text-uppercase">Total</span>
+                <span>
+                  S$
+                  {calculateTotalPayment(selectedRoom.price, taxAndServiceFees)}
+                </span>
+              </div>
+            </div>
+          </div>
+          <button
+            className="proceed-btn p-10 text-uppercase"
+            onClick={handleBookingProceed}
+          >
+            Proceed
+          </button>
+        </div>
       ) : null}
     </div>
   );

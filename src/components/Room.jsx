@@ -1,6 +1,14 @@
 import "../css/room.css";
 
-function Room({ title, sub_title, description, price, photo }) {
+function Room({
+  id,
+  title,
+  sub_title,
+  description,
+  price,
+  photo,
+  onRoomSelected,
+}) {
   return (
     <div className="room d-flex mb-16">
       <div className="details">
@@ -17,7 +25,9 @@ function Room({ title, sub_title, description, price, photo }) {
           <span className="long-stay">/night</span>
         </h1>
         <p>Subject to GST and charges</p>
-        <button className="book-btn">Book Room</button>
+        <button className="book-btn" onClick={() => onRoomSelected(id)}>
+          Book Room
+        </button>
       </div>
     </div>
   );
