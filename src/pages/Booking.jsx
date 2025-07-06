@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
-import { useLocation, Navigate, useNavigate } from "react-router-dom";
-import { format, parseISO, differenceInDays } from "date-fns";
+import { Navigate, useNavigate } from "react-router-dom";
+import { parseISO, differenceInDays } from "date-fns";
 import { supabase } from "../supabaseClient";
 import useUser from "../useUser";
 import NavBar from "../components/NavBar";
 import BookSteps from "../components/BookSteps";
 import Room from "../components/Room";
 import { HOTEL_TAX_RATE, HOTEL_SERVICE_FEE } from "../constants";
+import {
+  useQuery,
+  formatDate,
+  calculateTaxAndServiceFee,
+  calculateTotalPayment,
+} from "../utils";
 import "../css/booking.css";
 
 const sortOptions = [
@@ -15,24 +21,6 @@ const sortOptions = [
 ];
 const honorOptions = ["Mr", "Mrs", "Ms", "Miss", "Sir", "Madam"];
 const taxAndServiceFees = (HOTEL_TAX_RATE + HOTEL_SERVICE_FEE) * 10;
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-function formatDate(date) {
-  return format(parseISO(date), "MMM d, yyyy");
-}
-
-function calculateTaxAndServiceFee(total, fees) {
-  const result = (fees / 100) * total;
-  return +result.toFixed(2);
-}
-
-function calculateTotalPayment(total, fees) {
-  const result = total + calculateTaxAndServiceFee(total, fees);
-  return result.toFixed(2);
-}
 
 function Booking() {
   const [step, setStep] = useState(2);

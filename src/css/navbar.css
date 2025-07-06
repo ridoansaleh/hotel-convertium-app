@@ -1,9 +1,15 @@
-.navbar {
-  display: flex;
-  justify-content: flex-end;
+.navbar .authenticated > .my-bookings {
+  text-decoration: none;
+  cursor: pointer;
+  color: black;
 }
 
-.navbar .logout, .login {
+.navbar .authenticated > .my-bookings:hover {
+  text-decoration: underline;
+}
+
+.navbar .logout,
+.login {
   background-color: white;
   padding: 5px 10px;
   border: 1px solid lightgrey;

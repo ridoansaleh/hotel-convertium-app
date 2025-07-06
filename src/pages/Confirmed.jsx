@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { format, parseISO } from "date-fns";
 import { supabase } from "../supabaseClient";
+import { useQuery, formatDate } from "../utils";
 import "../css/confirmed.css";
-
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
-function formatDate(date) {
-  return format(parseISO(date), "MMM d, yyyy");
-}
 
 function Confirmed() {
   const [loading, setLoading] = useState(true);

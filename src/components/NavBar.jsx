@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import "../css/navbar.css";
 
-function NavBar() {
+function NavBar({ goBack = false }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -49,16 +49,29 @@ function NavBar() {
   return (
     <div className="navbar">
       {user ? (
-        <div className="logged-in">
-          <span className="mr-10">{user.name}</span>
-          <button className="logout" onClick={handleLogout}>
-            Log out
-          </button>
+        <div className="authenticated d-flex justify-between items-center w-100">
+          {goBack ? (
+            <Link className="my-bookings" to="/">
+              Back to Home
+            </Link>
+          ) : (
+            <Link className="my-bookings" to="/my-bookings">
+              My Bookings
+            </Link>
+          )}
+          <div>
+            <span className="mr-10">{user.name}</span>
+            <button className="logout" onClick={handleLogout}>
+              Log out
+            </button>
+          </div>
         </div>
       ) : (
-        <button className="login" onClick={() => navigate("/login")}>
-          Log in
-        </button>
+        <div className="d-flex justify-end">
+          <button className="login" onClick={() => navigate("/login")}>
+            Log in
+          </button>
+        </div>
       )}
     </div>
   );
