@@ -22,6 +22,10 @@
   width: 70%;
 }
 
+.w-65 {
+  width: 65%;
+}
+
 .d-flex {
   display: flex;
 }
@@ -127,10 +131,18 @@
 
 .fs-13 {
   font-size: 13px;
-} 
+}
+
+.fs-24 {
+  font-size: 24px;
+}
 
 .text-uppercase {
   text-transform: uppercase;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .color-red {

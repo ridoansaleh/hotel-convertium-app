@@ -1,0 +1,40 @@
+.confirmed .info {
+  display: flex;
+  background-color: #e1e1e1;
+  border: 1px solid #b6b6b6;
+}
+
+.confirmed .info {
+  background-color: #e1e1e1;
+  border: 1px solid #b6b6b6;
+  flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+  .confirmed .info {
+    flex-direction: row;
+  }
+}
+
+.confirmed .info > .payment {
+  margin-bottom: 10px;
+}
+
+.confirmed .info > .payment .photo {
+  width: 120px;
+}
+
+.confirmed .info > .guest {
+  /* width: 0%; */
+  background-color: lightgrey;
+}
+
+@media only screen and (min-width: 600px) {
+  .confirmed .info > .payment {
+    width: 65%;
+    margin-bottom: 0;
+  }
+  .confirmed .info > .guest {
+    width: 35%;
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, Navigate } from "react-router-dom";
+import { useLocation, Navigate, useNavigate } from "react-router-dom";
 import { format, parseISO, differenceInDays } from "date-fns";
 import { supabase } from "../supabaseClient";
 import useUser from "../useUser";
@@ -44,6 +44,7 @@ function Booking() {
   const [rooms, setRooms] = useState([]);
   const query = useQuery();
   const { user } = useUser();
+  const navigate = useNavigate();
 
   const totalGuest = query.get("guest");
   const start = query.get("start");
@@ -89,9 +90,7 @@ function Booking() {
   };
 
   const handleSelectRoom = (roomId) => {
-    // console.log("ROOM ID ", roomId);
     const selectedRoom = rooms.find((room) => room.id === roomId);
-    // console.log("selectedRoom > ", selectedRoom);
     if (!selectedRoom) return;
     setSelectedRoom(selectedRoom);
     setStep(3);
@@ -110,9 +109,40 @@ function Booking() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleBookingProceed = () => {
+  const handleBookingProceed = async () => {
     if (validate()) {
-      //
+      const { data, error } = await supabase
+        .from("bookings")
+        .insert([
+          {
+            profile_id: user.id,
+            room_id: selectedRoom.id,
+            guest_title: honor,
+            guest_name: name,
+            guest_email: email,
+            total_guest: totalGuest,
+            total_night: totalStay,
+            from: new Date(start),
+            to: new Date(end),
+            price: selectedRoom.price,
+            tax_and_service: calculateTaxAndServiceFee(
+              totalStay * selectedRoom.price,
+              taxAndServiceFees
+            ),
+            tax_and_service_rate: taxAndServiceFees,
+            total_price: calculateTotalPayment(
+              totalStay * selectedRoom.price,
+              taxAndServiceFees
+            ),
+          },
+        ])
+        .select();
+      if (error) {
+        alert("Unable to proceed your booking");
+        return;
+      }
+      const bookingId = data[0].id;
+      navigate(`/confirmed?bookingId=${bookingId}`);
     } else {
       alert("Please input a valid name/email!");
     }
@@ -232,7 +262,7 @@ function Booking() {
                 <span>
                   S$
                   {calculateTaxAndServiceFee(
-                    selectedRoom.price,
+                    totalStay * selectedRoom.price,
                     taxAndServiceFees
                   )}
                 </span>
@@ -241,7 +271,10 @@ function Booking() {
                 <span className="text-uppercase">Total</span>
                 <span>
                   S$
-                  {calculateTotalPayment(selectedRoom.price, taxAndServiceFees)}
+                  {calculateTotalPayment(
+                    totalStay * selectedRoom.price,
+                    taxAndServiceFees
+                  )}
                 </span>
               </div>
             </div>
