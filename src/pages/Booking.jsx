@@ -218,12 +218,22 @@ function Booking() {
                   />
                 </div>
               </div>
-              <button
-                className="proceed-btn p-10 mt-24 text-uppercase"
-                onClick={handleBookingProceed}
-              >
-                Proceed
-              </button>
+              {/* START: buttons displayed in Desktop */}
+              <div className="d-flex mt-24">
+                <button
+                  className="back-btn p-10 text-uppercase mr-10"
+                  onClick={() => setStep(2)}
+                >
+                  Back
+                </button>
+                <button
+                  className="proceed-btn p-10 text-uppercase"
+                  onClick={handleBookingProceed}
+                >
+                  Proceed
+                </button>
+              </div>
+              {/* END: buttons displayed in Desktop */}
             </div>
             <div className="order p-16">
               <div className="text-uppercase fs-13 mb-5">
@@ -267,12 +277,22 @@ function Booking() {
               </div>
             </div>
           </div>
-          <button
-            className="proceed-btn p-10 text-uppercase"
-            onClick={handleBookingProceed}
-          >
-            Proceed
-          </button>
+          {/* START: buttons displayed in Mobile */}
+          <div>
+            <button
+              className="back-btn p-10 text-uppercase mr-10"
+              onClick={() => setStep(2)}
+            >
+              Back
+            </button>
+            <button
+              className="proceed-btn p-10 text-uppercase"
+              onClick={handleBookingProceed}
+            >
+              Proceed
+            </button>
+          </div>
+          {/* END: buttons displayed in Mobile */}
         </div>
       ) : null}
     </div>

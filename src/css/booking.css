@@ -37,18 +37,22 @@
   padding: 5px;
 }
 
-/* START: Proceed btn in Desktop */
-.contact-information .details .proceed-btn {
+/* START: Back/Proceed btn in Desktop */
+.contact-information .details .proceed-btn,
+.contact-information .details .back-btn {
   display: none;
 }
+
 @media only screen and (min-width: 600px) {
-  .contact-information .details .proceed-btn {
+  .contact-information .details .proceed-btn,
+  .contact-information .details .back-btn {
     display: block;
   }
 }
-/* END: Proceed btn in Desktop */
+/* END: Back/Proceed btn in Desktop */
 
-.contact-information > .details input:focus {
+.contact-information > .details input:focus,
+.contact-information > .details select:focus {
   outline: none;
   box-shadow: none;
 }
@@ -74,17 +78,26 @@
   width: 100%;
 }
 
-/* START: Proceed btn in Mobile | Only display property */
+.contact-information .back-btn {
+  background-color: white;
+  color: black;
+  width: 120px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
 .contact-information .proceed-btn {
   background-color: black;
   color: white;
-  border: none;
+  border: 1px solid black;
   width: 120px;
   cursor: pointer;
 }
+
 @media only screen and (min-width: 600px) {
+  .contact-information .back-btn,
   .contact-information .proceed-btn {
     display: none;
   }
 }
-/* END: Proceed btn in Mobile */
