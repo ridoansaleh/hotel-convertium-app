@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
 import { supabase } from "../supabaseClient";
 import { useQuery, formatDate } from "../utils";
 import "../css/confirmed.css";
@@ -38,7 +39,8 @@ function Confirmed() {
 
   return (
     <div className="confirmed page m-auto">
-      <div className="text-center mb-24">
+      <NavBar />
+      <div className="text-center mt-32 mb-24">
         <div className="title text-uppercase fs-24 mb-16">
           Your Booking Has Been Confirmed
         </div>
