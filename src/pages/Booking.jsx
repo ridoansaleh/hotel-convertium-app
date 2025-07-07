@@ -243,7 +243,7 @@ function Booking() {
               </div>
               <div className="d-flex justify-between mb-10">
                 <span>Room</span>
-                <span>S${selectedRoom.price}</span>
+                <span>S${totalStay * selectedRoom.price}</span>
               </div>
               <div className="d-flex justify-between mb-24">
                 <span>Tax & Service Charges ({taxAndServiceFees}%)</span>

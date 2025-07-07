@@ -79,7 +79,7 @@ function Confirmed() {
           <div className="font-bold text-uppercase my-10">Package:</div>
           <div className="d-flex justify-between mb-10 mr-10">
             <span>Room</span>
-            <span>$S{booking.price * booking.total_guest}</span>
+            <span>$S{booking.price * booking.total_night}</span>
           </div>
           <div className="d-flex justify-between mb-10 mr-10">
             <span>Tax & Service Charges ({booking.tax_and_service_rate}%)</span>
