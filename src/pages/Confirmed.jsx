@@ -11,7 +11,7 @@ function Confirmed() {
   const bookingId = query.get("bookingId");
 
   useEffect(() => {
-    async function getData() {
+    async function getBookingDetails() {
       const { data, error } = await supabase
         .from("bookings")
         .select(
@@ -32,7 +32,7 @@ function Confirmed() {
       setLoading(false);
     }
 
-    getData();
+    getBookingDetails();
   }, []);
 
   if (loading) return <div>Loading...</div>;
