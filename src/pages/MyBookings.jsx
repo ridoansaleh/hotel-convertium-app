@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 import NavBar from "../components/NavBar";
 import { supabase } from "../supabaseClient";
 import "../css/my-bookings.css";
+
+const today = format(new Date(), "yyyy-MM-dd");
 
 function MyBookings() {
   const [upcomingBookings, setUpcomingBookings] = useState([]);
@@ -21,7 +24,7 @@ function MyBookings() {
             )
         `
         )
-        .gte("from", new Date().toISOString());
+        .gte("from", today);
       if (error) {
         alert("Error getting the upcoming bookings");
       }
@@ -40,7 +43,7 @@ function MyBookings() {
             )
         `
         )
-        .lt("from", new Date().toISOString());
+        .lt("from", today);
       if (error) {
         alert("Error getting the past bookings");
       }
