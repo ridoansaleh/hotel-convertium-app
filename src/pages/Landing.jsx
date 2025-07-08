@@ -10,15 +10,16 @@ import hotelRoom from "../assets/hotel-room.jpg";
 
 const guestOptions = [
   { value: "1", label: "1 person" },
-  { value: "2", label: "2 persons" },
-  { value: "3", label: "3 persons" },
-  { value: "4", label: "4 persons" },
-  { value: "5", label: "5 persons" },
+  { value: "2", label: "2 people" },
+  { value: "3", label: "3 people" },
+  { value: "4", label: "4 people" },
+  { value: "5", label: "5 people" },
+  { value: "6", label: "6 people" },
 ];
 
 function Landing() {
   const [totalGuest, setTotalGuest] = useState(null);
-  const [dateRange, setDateRange] = useState([new Date()]);
+  const [dateRange, setDateRange] = useState([]);
   const navigate = useNavigate();
 
   const handleSearchRoom = () => {
@@ -43,7 +44,7 @@ function Landing() {
         <Select
           className="input"
           options={guestOptions}
-          placeholder="Total guest"
+          placeholder="Number of guests"
           value={totalGuest}
           onChange={(val) => setTotalGuest(val)}
           styles={{
@@ -60,8 +61,8 @@ function Landing() {
         <div className="divider" />
         <Flatpickr
           className="input date-picker"
-          options={{ mode: "range", dateFormat: "d M Y" }}
-          placeholder="Select a date"
+          options={{ mode: "range", dateFormat: "d M Y", minDate: "today" }}
+          placeholder="Check-in & Check-out Dates"
           value={dateRange}
           onChange={setDateRange}
         />
