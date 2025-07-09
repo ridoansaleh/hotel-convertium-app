@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+import { useQuery } from "../utils";
 import "../css/form.css";
 
 function Login() {
@@ -10,6 +11,11 @@ function Login() {
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const query = useQuery();
+
+  const totalGuest = query.get("guest");
+  const start = query.get("start");
+  const end = query.get("end");
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
@@ -51,7 +57,11 @@ function Login() {
       } else {
         setFormData({ email: "", password: "" });
         setErrors({});
-        navigate("/");
+        if (totalGuest && start && end) {
+          navigate(`/book?guest=${totalGuest}&start=${start}&end=${end}`);
+        } else {
+          navigate("/");
+        }
       }
     }
   };

@@ -4,9 +4,10 @@ import Select from "react-select";
 import Flatpickr from "react-flatpickr";
 import { format } from "date-fns";
 import NavBar from "../components/NavBar";
+import useUser from "../useUser";
+import hotelRoom from "../assets/hotel-room.jpg";
 import "flatpickr/dist/themes/material_blue.css";
 import "../css/landing.css";
-import hotelRoom from "../assets/hotel-room.jpg";
 
 const guestOptions = [
   { value: "1", label: "1 person" },
@@ -21,6 +22,7 @@ function Landing() {
   const [totalGuest, setTotalGuest] = useState(null);
   const [dateRange, setDateRange] = useState([]);
   const navigate = useNavigate();
+  const { user } = useUser();
 
   const handleSearchRoom = () => {
     const [start, end] = dateRange;
@@ -30,9 +32,16 @@ function Landing() {
       alert("Please complete the form!");
       return;
     }
-    navigate(
-      `/book?guest=${totalGuest.value}&start=${formattedStart}&end=${formattedEnd}`
-    );
+
+    if (user) {
+      navigate(
+        `/book?guest=${totalGuest.value}&start=${formattedStart}&end=${formattedEnd}`
+      );
+    } else {
+      navigate(
+        `/login?guest=${totalGuest.value}&start=${formattedStart}&end=${formattedEnd}`
+      );
+    }
   };
 
   return (
