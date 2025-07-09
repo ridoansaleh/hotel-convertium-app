@@ -81,6 +81,11 @@ function Register() {
         alert(`Successfully created an account for ${name}`);
         setFormData({ name: "", email: "", password: "", address: "" });
         setErrors({});
+        /* NOTE:
+           redirect users to the landing page after signup
+           email-verification is deactivated, so all users treat as activated after login by Supabase Auth
+        */
+        navigate("/");
       }
     }
   };
