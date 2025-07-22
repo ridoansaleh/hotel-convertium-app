@@ -30,3 +30,9 @@
 .book-steps .not-active {
   opacity: 0.4;
 }
+
+@media only screen and (max-width: 599px) {
+  .book-steps .not-current {
+    display: none;
+  }
+}
