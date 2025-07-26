@@ -73,34 +73,42 @@ function Login() {
       </p>
 
       <div>
-        <label>Email</label>
-        <br />
+        <label htmlFor="email">Email</label>
         <input
           type="email"
+          id="email"
           name="email"
           autoComplete="new-email"
+          aria-describedby={errors.email ? "email-error" : undefined}
+          aria-invalid={!!errors.email}
           className={`field mt-5 ${!errors.email ? "mb-10" : ""}`}
           value={formData.email}
           onChange={handleChange}
         />
         {errors.email && (
-          <div className="error-message mb-10">{errors.email}</div>
+          <div id="email-error" className="error-message mb-10" role="alert">
+            {errors.email}
+          </div>
         )}
       </div>
 
       <div>
-        <label>Password</label>
-        <br />
+        <label htmlFor="password">Password</label>
         <input
           type="password"
+          id="password"
           name="password"
           autoComplete="new-password"
+          aria-describedby={errors.password ? "password-error" : undefined}
+          aria-invalid={!!errors.password}
           className={`field mt-5 ${!errors.password ? "mb-10" : ""}`}
           value={formData.password}
           onChange={handleChange}
         />
         {errors.password && (
-          <div className="error-message mb-10">{errors.password}</div>
+          <div id="password-error" className="error-message mb-10" role="alert">
+            {errors.password}
+          </div>
         )}
       </div>
 
