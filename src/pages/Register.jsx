@@ -91,7 +91,11 @@ function Register() {
   };
 
   return (
-    <form className="signup-form" onSubmit={handleSubmit} noValidate>
+    <form
+      className="signup-form d-flex flex-column justify-center"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <p className="label">
         Please <span className="font-bold">Sign up</span> before booking a hotel
         room!

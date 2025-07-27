@@ -67,7 +67,11 @@ function Login() {
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit} noValidate>
+    <form
+      className="login-form d-flex flex-column justify-center"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <p className="label">
         Please <span className="font-bold">Log in</span> to your account!
       </p>

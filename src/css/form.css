@@ -11,6 +11,11 @@
 }
 
 .signup-form, .login-form {
+  /* 4rem is calculated based on #root padding */
+  height: calc(100% - 4rem); 
+}
+
+.signup-form, .login-form {
   width: 300px;
   margin: auto;
 }
